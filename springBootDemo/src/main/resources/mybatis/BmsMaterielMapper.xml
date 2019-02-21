@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dumm.mapper.BmsMaterielMapper">
+  <resultMap id="BaseResultMap" type="com.dumm.entity.BmsMaterielEntity">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="materiel_code" jdbcType="VARCHAR" property="materielCode" />
+    <result column="materiel_name" jdbcType="VARCHAR" property="materielName" />
+    <result column="materiel_type" jdbcType="VARCHAR" property="materielType" />
+    <result column="materiel_type_name" jdbcType="VARCHAR" property="materielTypeName" />
+    <result column="default_unit" jdbcType="VARCHAR" property="defaultUnit" />
+    <result column="default_unit_name" jdbcType="VARCHAR" property="defaultUnitName" />
+    <result column="conversion_weight" jdbcType="DECIMAL" property="conversionWeight" />
+    <result column="conversion_volume" jdbcType="DECIMAL" property="conversionVolume" />
+    <result column="brand_id" jdbcType="VARCHAR" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="packet_weight" jdbcType="VARCHAR" property="packetWeight" />
+    <result column="packet_weight_name" jdbcType="VARCHAR" property="packetWeightName" />
+    <result column="colour_code" jdbcType="VARCHAR" property="colourCode" />
+    <result column="colour_name" jdbcType="VARCHAR" property="colourName" />
+    <result column="technology_code" jdbcType="VARCHAR" property="technologyCode" />
+    <result column="technology_name" jdbcType="VARCHAR" property="technologyName" />
+    <result column="pallet_number" jdbcType="INTEGER" property="palletNumber" />
+    <result column="net_weight" jdbcType="DECIMAL" property="netWeight" />
+    <result column="gross_weight" jdbcType="DECIMAL" property="grossWeight" />
+    <result column="converted_weight" jdbcType="DECIMAL" property="convertedWeight" />
+    <result column="materiel_long" jdbcType="DECIMAL" property="materielLong" />
+    <result column="materiel_wide" jdbcType="DECIMAL" property="materielWide" />
+    <result column="materiel_high" jdbcType="DECIMAL" property="materielHigh" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="organization_code" jdbcType="VARCHAR" property="organizationCode" />
+    <result column="organization_id" jdbcType="VARCHAR" property="organizationId" />
+    <result column="top_organization_name" jdbcType="VARCHAR" property="topOrganizationName" />
+    <result column="top_organization_code" jdbcType="VARCHAR" property="topOrganizationCode" />
+    <result column="top_organization_id" jdbcType="VARCHAR" property="topOrganizationId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_account_id" jdbcType="VARCHAR" property="addAccountId" />
+    <result column="add_account_name" jdbcType="VARCHAR" property="addAccountName" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="edit_account_id" jdbcType="VARCHAR" property="editAccountId" />
+    <result column="edit_account_name" jdbcType="VARCHAR" property="editAccountName" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.dumm.entity.BmsMaterielEntity" resultMap="BaseResultMap">
+    select
+    id, materiel_code, materiel_name,
+    materiel_type, materiel_type_name, default_unit,
+    default_unit_name, conversion_weight, conversion_volume
+
+    from bms_materiel
+    <where>
+      is_deleted != 1
+      <if test="id != null">
+         and id=#{id,jdbcType=VARCHAR}
+      </if>
+      <if test="materielCode!= null and materielCode!=''">
+         and materiel_code  like CONCAT('%',  #{materielCode,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="materielName!= null and materielName!=''">
+        and materiel_name  like CONCAT('%',  #{materielName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+    order by add_time desc
+  </select>
+
+  <select id="findListBycode" parameterType="com.dumm.entity.BmsMaterielEntity" resultMap="BaseResultMap">
+    select
+    id, materiel_code, materiel_name,
+    materiel_type, materiel_type_name, default_unit,
+    default_unit_name, conversion_weight, conversion_volume,
+    brand_id, brand_name, packet_weight,
+    packet_weight_name, colour_code, colour_name,
+    technology_code, technology_name, pallet_number,
+    net_weight, gross_weight, converted_weight,
+    materiel_long, materiel_wide, materiel_high,
+    is_deleted, status, organization_name,
+    organization_code, organization_id, top_organization_name,
+    top_organization_code, top_organization_id,
+    add_time, add_account_id, add_account_name,
+    edit_time, edit_account_id, edit_account_name
+    from bms_materiel
+    <where>
+      is_deleted != 1
+      <if test="id != null">
+      and id=#{id,jdbcType=VARCHAR}
+      </if>
+      <if test="materielCode!= null and materielCode!=''">
+        and materiel_code  = #{materielCode,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by add_time desc
+  </select>
+
+
+</mapper>
